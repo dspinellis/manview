@@ -2,8 +2,11 @@
 
 *man pages online viewer*
 
-*Manview* is heavily based on [Jroff](https://github.com/roperzh/jroff)
-and [Grapse](https://github.com/roperzh/grapse).
+*Manview* is heavily based on
+[Jroff](https://github.com/roperzh/jroff),
+[essential.js](http://roperzh.github.io/essential.js/), and
+[Grapse](https://github.com/roperzh/grapse).
+
 It is currently work in progress.
 
 ## Contributing:
