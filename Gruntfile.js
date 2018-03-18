@@ -110,6 +110,7 @@ module.exports = function(grunt) {
     browserSync: {
       dev: {
         options: {
+	  open: false,
           server: {
             baseDir: './'
           },
