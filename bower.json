@@ -1,8 +1,9 @@
 {
-  "name": "grapse",
+  "name": "manview",
   "version": "0.0.1",
   "authors": [
     "Roberto Dip <dip.jesusr@gmail.com>"
+    "Diomidis Spinellis <dds@aueb.gr>"
   ],
   "license": "MIT",
   "ignore": [

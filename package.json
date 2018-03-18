@@ -1,13 +1,13 @@
 {
-  "name": "grapse",
+  "name": "manview",
   "version": "0.0.1",
-  "description": "Online groff page parser",
+  "description": "Online troff page viewer",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "deploy": "grunt build && ./deploy.sh"
   },
-  "author": "Roberto Dip",
+  "author": "Roberto Dip and Diomidis Spinellis",
   "license": "MIT",
   "devDependencies": {},
   "dependencies": {
