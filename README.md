@@ -1,10 +1,12 @@
-#grapse
+# manview
 
-*man pages online editor*
+*man pages online viewer*
 
-Grapse is heavily based on [Jroff](https://github.com/roperzh/jroff)
+*Manview* is heavily based on [Jroff](https://github.com/roperzh/jroff)
+and [Grapse](https://github.com/roperzh/grapse).
+It is currently work in progress.
 
-##Contributing:
+## Contributing:
 
 ### Dependencies:
 
