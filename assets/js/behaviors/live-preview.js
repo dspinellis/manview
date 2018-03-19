@@ -6,7 +6,7 @@ Grapse.Behaviors.LivePreview = Essential.Behavior.extend({
   priority: 1,
 
   init: function() {
-    var url = 'https://raw.githubusercontent.com/dspinellis/unix-history-repo/BSD-4_1c_2/usr/man/man2/syscall.2';
+    var url = 'https://raw.githubusercontent.com/dspinellis/manview/master/manview.3';
     var parsedURI = URI.parse(window.location.href);
     console.log('parsedURI ' + parsedURI);
     if (parsedURI.query) {
