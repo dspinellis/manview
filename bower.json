@@ -2,7 +2,7 @@
   "name": "manview",
   "version": "0.0.1",
   "authors": [
-    "Roberto Dip <dip.jesusr@gmail.com>"
+    "Roberto Dip <dip.jesusr@gmail.com>",
     "Diomidis Spinellis <dds@aueb.gr>"
   ],
   "license": "MIT",
@@ -16,6 +16,7 @@
   "dependencies": {
     "normalize-scss": "~3.0.3",
     "jroff": "*",
-    "essential.js": "essential#~0.5.0"
+    "essential.js": "essential#~0.5.0",
+    "uri.js": "*"
   }
 }

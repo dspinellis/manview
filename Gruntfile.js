@@ -6,15 +6,12 @@ module.exports = function(grunt) {
   require('time-grunt')(grunt);
 
   var jsFileList = [
-    'assets/vendor/ace-builds/src-noconflict/ace.js',
-    'assets/vendor/ace-builds/src-noconflict/theme-chrome.js',
-    'assets/vendor/ace-builds/src-noconflict/mode-javascript.js',
     'assets/vendor/jroff/dist/jroff.js',
     'assets/vendor/essential.js/essential.js',
-    'assets/js/ace-modes/groff.js',
     'assets/js/main.js',
     'assets/js/services/*.js',
-    'assets/js/behaviors/*.js'
+    'assets/js/behaviors/*.js',
+    'assets/vendor/uri.js/src/URI.min.js'
   ];
 
   grunt.initConfig({
