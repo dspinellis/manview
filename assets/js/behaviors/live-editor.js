@@ -12,16 +12,8 @@ Grapse.Behaviors.LiveEditor = Essential.Behavior.extend({
     /* Bindings */
     this.editor.on("change", this.emitChangedContent.bind(this));
 
-    this.emitChangedContent();
-    this.emitChangedContent();
   },
 
   emitChangedContent: function() {
-    this.emit({
-      channel: 'editor:changed',
-      data: {
-        text: this.editor.getValue()
-      }
-    });
   }
 });
