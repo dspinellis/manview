@@ -21,7 +21,7 @@ Grapse.Behaviors.LivePreview = Essential.Behavior.extend({
     request.open('GET', url);
     request.responseType = 'text';
     request.onload = function() {
-      var customEvent = new CustomEvent("editor:changed", {
+      var customEvent = new CustomEvent("source:retrieved", {
 	"detail": {
 	  text: request.response
 	}
@@ -33,24 +33,13 @@ Grapse.Behaviors.LivePreview = Essential.Behavior.extend({
   },
 
   channels: {
-    'editor:changed': 'refreshChannel',
-    'macroLibrary:changed': 'setMacroLib'
-  },
-
-  setMacroLib: function(e) {
-    this.parser.setMacroLib(e.detail.macroLib);
-    this.refresh(this.lastParsedText);
+    'source:retrieved': 'refreshChannel',
   },
 
   refreshChannel: function(e) {
-    console.log("In refresh channel ");
-    console.log("e.detail.text: " + e.detail.text.length);
-    this.refresh(e.detail.text);
+    console.log("Source text length: " + e.detail.text.length);
+    this.el.innerHTML = this.parser.parseGroff(e.detail.text);
+    console.log("HTML length: " + this.el.innerHTML.length);
   },
 
-  refresh: function(text) {
-    this.lastParsedText = text;
-    this.el.innerHTML = this.parser.parseGroff(text);
-    console.log("HTML: " + this.el.innerHTML.length);
-  }
 });
