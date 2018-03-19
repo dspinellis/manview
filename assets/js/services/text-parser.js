@@ -5,7 +5,7 @@
 Grapse.Services.TextParser = Proto.extend({
   constructor: function() {
     this.generator = new Jroff.HTMLGenerator();
-    this.macroLib = 'doc';
+    this.macroLib = 'an';
   },
 
   setMacroLib: function(macroLib) {
