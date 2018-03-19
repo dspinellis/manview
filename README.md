@@ -27,6 +27,7 @@ Just clone the project and install the dependencies!
 $ git clone https://github.com/roperzh/fe-playground.git
 $ npm install
 $ bower install
+$ grunt build
 $ grunt
 ```
 ### Deployment
