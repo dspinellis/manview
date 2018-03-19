@@ -2,13 +2,13 @@
 //   Main
 // -------------------------------------------
 
-Grapse = {};
-Grapse.Behaviors = {};
-Grapse.Services = {};
+ManView = {};
+ManView.Behaviors = {};
+ManView.Services = {};
 
 document.addEventListener('DOMContentLoaded', function() {
   Essential.loadBehaviors({
-    application: Grapse.Behaviors,
+    application: ManView.Behaviors,
     context: document
   });
 });

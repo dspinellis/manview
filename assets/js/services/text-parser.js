@@ -2,7 +2,7 @@
 //   Text parser
 // -------------------------------------------
 
-Grapse.Services.TextParser = Proto.extend({
+ManView.Services.TextParser = Proto.extend({
   constructor: function() {
     this.generator = new Jroff.HTMLGenerator();
     this.macroLib = 'an';

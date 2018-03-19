@@ -2,7 +2,7 @@
 //   Set title
 // -------------------------------------------
 
-Grapse.Behaviors.SetTitle = Essential.Behavior.extend({
+ManView.Behaviors.SetTitle = Essential.Behavior.extend({
   priority: 1,
 
   init: function() {

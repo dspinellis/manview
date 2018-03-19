@@ -2,7 +2,7 @@
 //   Live preview
 // -------------------------------------------
 
-Grapse.Behaviors.LivePreview = Essential.Behavior.extend({
+ManView.Behaviors.PageView = Essential.Behavior.extend({
   priority: 1,
 
   init: function() {
@@ -15,7 +15,7 @@ Grapse.Behaviors.LivePreview = Essential.Behavior.extend({
       if (query.src)
 	url = query.src;
     }
-    this.parser = Grapse.Services.TextParser.new();
+    this.parser = ManView.Services.TextParser.new();
     var request = new XMLHttpRequest();
     console.log('Fetching ' + url);
     request.open('GET', url);
