@@ -1,0 +1,24 @@
+.\" Default manual page
+.TH manview 3 2018-03-19 Other
+.SH NAME
+manview \- web page that formats an arbitrary Unix manual page
+.SH SYNOPSIS
+.nf
+.B https://dspinellis.github.io/manview/
+?src=\fIURL\fP[&name=\fItitle\fP][&link=\fIURL\fP]
+.SH DESCRIPTION
+The
+.B manview
+web page displays formatted Unix manual pages
+by specifying the URL of their \fItroff\fP source code as an
+argument.
+Further opetional arguments can specify the displayed title and
+the title's hyperlink.
+.SH EXAMPLE
+.nf
+https://dspinellis.github.io/manview/?src=https%3A%2F%2Fraw.githubusercontent.com%2Fdspinellis%2Funix-history-repo%2FResearch-V7%2Fusr%2Fman%2Fman2%2Fpipe.2&name=Research%20V7%3A%20pipe(2)&link=https%3A%2F%2Fgithub.com%2Fdspinellis%2Funix-history-repo%2Fblob%2FResearch-V7%2Fusr%2Fman%2Fman2%2Fpipe.2
+.fi
+Formats the Seventh  Edition Unix
+.BR pipe (2)
+manual page
+retrieved from the Unix History Repository.
