@@ -37,8 +37,11 @@ ManView.Behaviors.PageView = Essential.Behavior.extend({
   },
 
   refreshChannel: function(e) {
-    console.log("Source text length: " + e.detail.text.length);
-    this.el.innerHTML = this.parser.parseGroff(e.detail.text);
+    var text = e.detail.text;
+    console.log("Source text length: " + text.length);
+    if (text.search(".Dd") != -1)
+      this.parser.setMacroLib("doc");
+    this.el.innerHTML = this.parser.parseGroff(text);
     console.log("HTML length: " + this.el.innerHTML.length);
   },
 
