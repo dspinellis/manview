@@ -1,11 +1,14 @@
 .\" Default manual page
 .TH manview 3 2018-03-19 Other
+
 .SH NAME
-manview \- web page that formats an arbitrary Unix manual page
+manview \- web page that formats a Unix manual page retrieved from the web
+
 .SH SYNOPSIS
 .nf
 .B https://dspinellis.github.io/manview/
 ?src=\fIURL\fP[&name=\fItitle\fP][&link=\fIURL\fP]
+
 .SH DESCRIPTION
 The
 .B manview
@@ -14,11 +17,28 @@ by specifying the URL of their \fItroff\fP source code as an
 argument.
 Further opetional arguments can specify the displayed title and
 the title's hyperlink.
+
+.SH IMPLEMENTATION NOTES
+The source code for this application is available on GitHub
+https://github.com/dspinellis/manview.
+.B Manview
+is heavily based on Jroff, essential.js, and Grapse.
+
 .SH EXAMPLE
-.nf
-https://dspinellis.github.io/manview/?src=https%3A%2F%2Fraw.githubusercontent.com%2Fdspinellis%2Funix-history-repo%2FResearch-V7%2Fusr%2Fman%2Fman2%2Fpipe.2&name=Research%20V7%3A%20pipe(2)&link=https%3A%2F%2Fgithub.com%2Fdspinellis%2Funix-history-repo%2Fblob%2FResearch-V7%2Fusr%2Fman%2Fman2%2Fpipe.2
-.fi
-Formats the Seventh  Edition Unix
+Format the Seventh  Edition Unix
 .BR pipe (2)
 manual page
 retrieved from the Unix History Repository.
+.br
+.nf
+https://dspinellis.github.io/manview/?src=https%3A%2F%2Fraw.githubusercontent.com%2Fdspinellis%2Funix-history-repo%2FResearch-V7%2Fusr%2Fman%2Fman2%2Fpipe.2&name=Research%20V7%3A%20pipe(2)&link=https%3A%2F%2Fgithub.com%2Fdspinellis%2Funix-history-repo%2Fblob%2FResearch-V7%2Fusr%2Fman%2Fman2%2Fpipe.2
+.fi
+
+.SH SEE ALSO
+The evolution of Unix facilities web page at
+https://dspinellis.github.io/unix-history-man/.
+
+.SH AUTHOR
+.B Manview
+is written by Diomidis Spinellis
+based on Jroff and Grapse written by Roberto Dip.
