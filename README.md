@@ -21,7 +21,7 @@
 Just clone the project and install the dependencies!
 
 ```bash
-$ git clone https://github.com/roperzh/fe-playground.git
+$ git clone https://github.com/dspinellis/manview
 $ npm install
 $ bower install
 $ grunt build
