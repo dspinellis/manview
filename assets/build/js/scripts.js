@@ -513,7 +513,7 @@ Parser.prototype.handleBreak = function (token) {
   if(this.lastTok.kind === BREAK) {
     this.scope.push(new Token('br', MACRO));
   } else {
-    this.scope.push(new Token(' ', TEXT));
+    this.scope.push(new Token('\n', TEXT));
   }
 
   this.lastTok = token;
@@ -910,8 +910,9 @@ macros.an.PP = macros.an.P;
 
 var fontMappings = {
   B: 'strong',
-  R: 'span',
+  C: 'code',
   I: 'i',
+  R: 'span',
   S: 'small'
 };
 
@@ -993,15 +994,12 @@ macros.defaults = {
   /**
    * No filling or adjusting of output lines.
    *
-   * This macro is useless in the context of the current
-   * implementation, it only produces a line break (similar to the
-   * default groff output)
-   *
    * @since 0.0.1
    *
    */
   nf: function () {
-    return '<br>';
+    this.buffer.nf = 1;
+    return '<div style="white-space: pre; display: block;">';
   },
 
   /**
@@ -1137,13 +1135,18 @@ macros.defaults = {
   },
 
   /**
-   * Fill output lines, does not apply for the current implementation
+   * Fill output lines
+   * Works only in conjuction with a previous .nf
    *
    * @since 0.0.1
    *
    */
   fi: function () {
-    return '';
+    if (this.buffer.nf) {
+      this.buffer.nf = 0;
+      return '</div>';
+    } else
+      return '';
   },
 
   /**
