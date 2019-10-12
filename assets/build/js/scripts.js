@@ -1189,7 +1189,7 @@ macros.defaults = {
     args = args.trim();
     fontType = args.charAt(0);
 
-    return macros.defaults.ft.call(this, fontType) + ' ' + args.slice(1);
+    return macros.defaults.ft.call(this, fontType) + ' ' + args.slice(1) + ' ';
   },
 
   /**
