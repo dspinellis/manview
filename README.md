@@ -27,6 +27,21 @@ $ bower install
 $ grunt build
 $ grunt
 ```
+### Development
+
+* To update the distributed version of jroff
+`cp  ../jroff/dist/jroff.js  assets/vendor/jroff/dist/jroff.js`
+
+* To test the current version
+
+```bash
+grunt build
+cd dist
+python -m SimpleHTTPServer 3001
+```
+
+* Point your browser to a URL such as [http://localhost:3001/?src=https://raw.githubusercontent.com/dspinellis/git-issue/master/git-issue.1](http://localhost:3001/?src=https://raw.githubusercontent.com/dspinellis/git-issue/master/git-issue.1)
+
 ### Deployment
 
 In order to deploy, commit and push all your changes on the master
