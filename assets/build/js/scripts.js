@@ -840,6 +840,38 @@ macros.an = {
   },
 
   /**
+   * Start an indented paragraph with the optional specified tag and
+   * hanging indent.
+   *
+   * @param {string} args
+   *
+   * @since 0.0.1
+   *
+   */
+  IP: function (args) {
+    var result = '';
+
+    args = this.parseArguments(args);
+    var tag = args[0] || '';
+    var indent = args[1] || this.buffer.style.indent;
+
+    result += this.closeAllTags(this.buffer.fontModes);
+    result += this.closeTagsUntil('div', this.buffer.openTags);
+
+    result += '<div>';
+    result += '<dl style="margin-bottom: 0;margin-top: 0;">';
+    result += '<dt style="float: left; clear: left;">' + tag + '</dt>';
+    result += '<dd style=" margin-left: ' + indent + '%;">';
+
+    this.buffer.openTags.push('div');
+    this.buffer.openTags.push('dl');
+    this.buffer.openTags.push('dd');
+
+    return result;
+  },
+
+
+  /**
    * Start relative margin indent: moves the left margin `indent` to
    * the right (if is omitted, the prevailing indent value is used).
    *
