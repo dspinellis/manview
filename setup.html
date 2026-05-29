@@ -65,6 +65,12 @@
         padding: 10px;
         border: 1px solid #E8E8E8;
         overflow-wrap: anywhere;
+        color: LinkText;
+      }
+
+      .setup-example-link {
+        color: LinkText;
+        text-decoration: underline;
       }
 
       .setup-result-link.is-warning {
@@ -108,12 +114,14 @@
       <h2>Manview — Unix manual page formatter</h2>
       <p>
         Manview allows you to dynamically format Unix manual pages formatted
-        in <em>troff</em> for HTML web display.
+        in <em>troff</em>&nbsp; for HTML web display.
         Through this form you can create a URL for any Unix manual page
         hosted on GitHub that will display it as nicely formatted HTML.
-        This allows you to link to Unix tool documentation without having
-        to format it yourself and without worrying about keeping the
-        formatted version current.
+        (See <a href="https://dspinellis.github.io/manview/?src=https%3A%2F%2Fraw.githubusercontent.com%2Fdspinellis%2Fgit-hot%2Frefs%2Fheads%2Fmaster%2Fgit-hot.1&name=git-hot&link=https%3A%2F%2Fgithub.com%2Fdspinellis%2Fgit-hot" class="setup-example-link">this example</a>.)
+        This allows you to link to automatically-formatted
+        human-readable Unix tool documentation,
+        saving you the trouble of having to format it yourself and
+        the worry of keeping the formatted version current.
       </p>
 
       <div style="height: 30px;"></div>
@@ -121,19 +129,22 @@
       <form id="setup-form">
         <div class="setup-field">
           <label for="src">Raw GitHub manual page URL</label>
-          <input id="src" name="src" type="url" placeholder="https://github.com/dspinellis/git-hot/raw/refs/heads/master/git-hot.1" required>
+          <input id="src" name="src" type="url" placeholder="https://raw.githubusercontent.com/dspinellis/git-hot/refs/heads/master/git-hot.1" required>
           <br />
-          To obtain the URL, use the <code>Raw</code> button when viewing
-          a GitHub project's file content.
+          To obtain the URL, click on the <code>Raw</code> button when viewing
+          a GitHub project's manual page file content and copy the displayed
+          page's link.
+          (Don't use the <code>Raw</code> button's hyperlink, as this
+           redirects to another domain.)
         </div>
 
         <div class="setup-field">
-          <label for="name">Page title</label>
+          <label for="name">Generated page title (optional)</label>
           <input id="name" name="name" type="text" placeholder="git-hot">
         </div>
 
         <div class="setup-field">
-          <label for="link">Page hyperlink</label>
+          <label for="link">Generated page hyperlink (optional)</label>
           <input id="link" name="link" type="url" placeholder="https://github.com/dspinellis/git-hot">
         </div>
       </form>
