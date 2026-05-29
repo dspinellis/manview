@@ -63,11 +63,11 @@ To host _Manview_ on your own
 just clone the project and install the dependencies.
 
 ```sh
-$ git clone https://github.com/dspinellis/manview
-$ npm install
-$ npx bower install
-$ npx grunt build
-$ npx grunt
+git clone https://github.com/dspinellis/manview
+npm install
+npx bower install
+npx grunt build
+npx grunt
 ```
 
 ## Development
@@ -95,7 +95,8 @@ python -m SimpleHTTPServer 3000
 To deploy the hosted version,
 commit and push all your changes on the master branch, and then run
 
-```bash
-$ npm run deploy
+```sh
+npm run deploy
+git push origin gh-pages
 ```
 
