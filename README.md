@@ -19,7 +19,7 @@ query argument to the URL <code>https://dspinellis.github.io/manview/</code>.
 You can also pass the page's title in the `name` query
 argument and its hyperlink in the `link` query argument.
 
-To avoid same-origin problems the response
+To avoid cross-origin problems the response
 (and any redirections leading to it) should include
 an appropriate CORS `Access-Control-Allow-Origin` header.
 (It's a good idea to avoid redirecting URLs.)
