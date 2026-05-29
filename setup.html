@@ -162,7 +162,7 @@
           </button>
         </div>
         <p id="origin-warning" class="setup-warning">
-          This source URL is on a different domain from this page. The generated Manview URL may fail if the site serving the content blocks cross-origin requests.
+          The manual page URL should start with https://raw.githubusercontent.com/. Other GitHub URLs usually return HTML instead of raw manual page text or fail same-origin checks, so the generated Manview URL may not render correctly.
         </p>
       </div>
       <div style="height: 60px;"></div>
@@ -190,18 +190,14 @@
           return new URL('./', window.location.href);
         }
 
-        function isCrossOrigin(url) {
-          try {
-            return new URL(url).origin !== window.location.origin;
-          } catch(e) {
-            return false;
-          }
+        function isRawGitHubUrl(url) {
+          return url.indexOf('https://raw.githubusercontent.com/') === 0;
         }
 
         function updateResult() {
           var url = manviewBaseUrl();
           var params = [];
-          var warning = fields.src.value && isCrossOrigin(fields.src.value);
+          var warning = fields.src.value && !isRawGitHubUrl(fields.src.value);
 
           if(fields.src.value) {
             params.push('src=' + encodeURIComponent(fields.src.value));
