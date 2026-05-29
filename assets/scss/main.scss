@@ -6,28 +6,26 @@
 //   Vendor
 // -------------------------------------
 
-@import "../vendor/normalize-scss/_normalize";
+@use "../vendor/normalize-scss/normalize";
 
 // -------------------------------------
 //   Base
 // -------------------------------------
 
-@import "base/variables";
-@import "base/mixins";
-@import "base/defaults";
+@use "base/defaults";
 
 // -------------------------------------
 //   Layouts
 // -------------------------------------
 
-@import "layouts/banner";
-@import "layouts/live-preview";
+@use "layouts/banner";
+@use "layouts/live-preview";
 
 // -------------------------------------
 //   Modules
 // -------------------------------------
 
-@import "modules/toolbar";
-@import "modules/code-box";
-@import "modules/groff-output";
-@import "modules/switch";
+@use "modules/toolbar";
+@use "modules/code-box";
+@use "modules/groff-output";
+@use "modules/switch";

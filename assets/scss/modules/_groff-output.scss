@@ -2,6 +2,8 @@
 //   Groff output
 // -------------------------------------------
 
+@use "../base/mixins" as *;
+
 .groff-output {
   padding: 20px 15px;
 

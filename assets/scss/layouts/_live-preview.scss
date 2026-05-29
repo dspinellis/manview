@@ -2,6 +2,9 @@
 //   Live preview
 // -------------------------------------------
 
+@use "../base/mixins" as *;
+@use "../base/variables" as *;
+
 .live-preview-l {
   @include clearfix();
 

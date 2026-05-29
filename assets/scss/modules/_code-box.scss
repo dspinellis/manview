@@ -2,6 +2,8 @@
 //   Code box
 // -------------------------------------------
 
+@use "../base/variables" as *;
+
 .code-box {
   $border: 1px solid $main-border-color;
 

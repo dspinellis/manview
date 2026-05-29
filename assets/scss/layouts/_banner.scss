@@ -2,6 +2,9 @@
 //   Banner
 // -------------------------------------------
 
+@use "../base/mixins" as *;
+@use "../base/variables" as *;
+
 [role="banner"] {
   @include clearfix();
 

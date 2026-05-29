@@ -2,6 +2,10 @@
 //   Switch
 // -------------------------------------------
 
+@use "sass:math";
+@use "../base/mixins" as *;
+@use "../base/variables" as *;
+
 .switch {
   $switch-height: 20px;
   $switch-width: $switch-height * 2;
@@ -69,7 +73,7 @@
     top: $padding * 2;
     left: $padding * 2;
     bottom: $padding * 2;
-    width: $switch-width / 2;
+    width: math.div($switch-width, 2);
     background-color: $main-border-color;
     border-radius: $switch-width;
     transition: transform 0.4s;

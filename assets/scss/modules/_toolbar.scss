@@ -2,6 +2,9 @@
 //   Toolbar
 // -------------------------------------------
 
+@use "../base/mixins" as *;
+@use "../base/variables" as *;
+
 .toolbar {
   $height: $banner-height - 10px;
 
