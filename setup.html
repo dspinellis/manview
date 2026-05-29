@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>Manview Setup | Dynamic Unix man page viewer</title>
-    <meta name="description" content="Manview — Unix manual page formatter">
+    <meta name="description" content="Manview — Unix manual online viewer">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" href="assets/build/css/main.css">
@@ -68,9 +68,8 @@
         color: LinkText;
       }
 
-      .setup-example-link {
+      .setup-default-link {
         color: LinkText;
-        text-decoration: underline;
       }
 
       .setup-result-link.is-warning {
@@ -111,13 +110,14 @@
     </header>
 
     <main class="setup-page">
-      <h2>Manview — Unix manual page formatter</h2>
+      <h2>Manview — Unix manual online viewer</h2>
       <p>
-        Manview allows you to dynamically format Unix manual pages formatted
-        in <em>troff</em>&nbsp; for HTML web display.
+        Manview dynamically presents a Unix manual page formatted
+        in <em>troff</em>&nbsp; as an HTML web page.
         Through this form you can create a URL for any Unix manual page
-        hosted on GitHub that will display it as nicely formatted HTML.
-        (See <a href="https://dspinellis.github.io/manview/?src=https%3A%2F%2Fraw.githubusercontent.com%2Fdspinellis%2Fgit-hot%2Frefs%2Fheads%2Fmaster%2Fgit-hot.1&name=git-hot&link=https%3A%2F%2Fgithub.com%2Fdspinellis%2Fgit-hot" class="setup-example-link">this example</a>.)
+        hosted on GitHub.
+        The URL will display the page as nicely formatted HTML.
+        (See <a href="https://dspinellis.github.io/manview/?src=https%3A%2F%2Fraw.githubusercontent.com%2Fdspinellis%2Fgit-hot%2Frefs%2Fheads%2Fmaster%2Fgit-hot.1&name=git-hot&link=https%3A%2F%2Fgithub.com%2Fdspinellis%2Fgit-hot" class="setup-default-link">this example</a>.)
         This allows you to link to automatically-formatted
         human-readable Unix tool documentation,
         saving you the trouble of having to format it yourself and
@@ -165,6 +165,12 @@
           This source URL is on a different domain from this page. The generated Manview URL may fail if the site serving the content blocks cross-origin requests.
         </p>
       </div>
+      <div style="height: 60px;"></div>
+      <hr />
+      <p>
+        Put together by <a href="https://www.spinellis.gr" class="setup-default-link">Diomidis Spinellis</a>.
+        Source code: <a href="https://github.com/dspinellis/manview/" class="setup-default-link">GitHub repository</a>.
+      </p>
     </main>
 
     <script>
