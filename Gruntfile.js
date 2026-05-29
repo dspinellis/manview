@@ -1,5 +1,7 @@
 'use strict';
 module.exports = function(grunt) {
+  var sass = require('sass');
+
   // Load all tasks
   require('load-grunt-tasks')(grunt);
   // Show elapsed time
@@ -29,6 +31,7 @@ module.exports = function(grunt) {
     },
     sass: {
       options: {
+        implementation: sass,
         sourceMap: false
       },
       dev: {
