@@ -42,18 +42,6 @@
         margin-top: 28px;
       }
 
-      .setup-output input {
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #E8E8E8;
-        font: inherit;
-      }
-
-      .setup-output input.is-warning {
-        border-color: #B00020;
-        color: #B00020;
-      }
-
       .setup-warning {
         display: none;
         margin-top: 10px;
@@ -64,10 +52,46 @@
         display: block;
       }
 
-      .setup-output a {
-        display: inline-block;
-        margin-top: 12px;
+      .setup-result-row {
+        display: flex;
+        align-items: stretch;
+        gap: 8px;
+        margin-top: 6px;
+      }
+
+      .setup-result-link {
+        flex: 1;
+        min-width: 0;
+        padding: 10px;
+        border: 1px solid #E8E8E8;
+        overflow-wrap: anywhere;
+      }
+
+      .setup-result-link.is-warning {
+        border-color: #B00020;
+        color: #B00020;
+      }
+
+      .copy-button {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 0 12px;
+        border: 1px solid #E8E8E8;
+        background: white;
+        cursor: pointer;
+        font: inherit;
         font-weight: 700;
+      }
+
+      .copy-button:disabled {
+        cursor: default;
+        opacity: 0.5;
+      }
+
+      .copy-button svg {
+        width: 16px;
+        height: 16px;
       }
     </style>
   </head>
@@ -115,20 +139,29 @@
       </form>
 
       <div class="setup-output">
-        <label for="result">Manview URL</label>
-        <input id="result" type="url" readonly>
+        <div>Manview URL</div>
+        <div class="setup-result-row">
+          <a id="result-link" class="setup-result-link" href="./"></a>
+          <button id="copy-button" class="copy-button" type="button" disabled>
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <rect x="9" y="9" width="11" height="11" rx="2" fill="none" stroke="currentColor" stroke-width="2"></rect>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" fill="none" stroke="currentColor" stroke-width="2"></path>
+            </svg>
+            <span id="copy-label">Copy</span>
+          </button>
+        </div>
         <p id="origin-warning" class="setup-warning">
           This source URL is on a different domain from this page. The generated Manview URL may fail if the site serving the content blocks cross-origin requests.
         </p>
-        <a id="result-link" href="./">Open generated page</a>
       </div>
     </main>
 
     <script>
       (function() {
         var form = document.getElementById('setup-form');
+        var copyButton = document.getElementById('copy-button');
+        var copyLabel = document.getElementById('copy-label');
         var originWarning = document.getElementById('origin-warning');
-        var result = document.getElementById('result');
         var resultLink = document.getElementById('result-link');
         var fields = {
           src: document.getElementById('src'),
@@ -166,13 +199,43 @@
           }
 
           url.search = params.join('&');
-          result.value = fields.src.value ? url.href : '';
-          resultLink.href = result.value || './';
-          result.classList.toggle('is-warning', warning);
+          resultLink.href = fields.src.value ? url.href : './';
+          resultLink.textContent = fields.src.value ? url.href : '';
+          resultLink.classList.toggle('is-warning', warning);
+          copyButton.disabled = !fields.src.value;
+          copyLabel.textContent = 'Copy';
           originWarning.classList.toggle('is-visible', warning);
         }
 
+        function copyResult() {
+          var text = resultLink.textContent;
+          var textarea;
+
+          if(!text) {
+            return;
+          }
+
+          if(navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text).then(function() {
+              copyLabel.textContent = 'Copied';
+            });
+            return;
+          }
+
+          textarea = document.createElement('textarea');
+          textarea.value = text;
+          textarea.setAttribute('readonly', '');
+          textarea.style.position = 'absolute';
+          textarea.style.left = '-9999px';
+          document.body.appendChild(textarea);
+          textarea.select();
+          document.execCommand('copy');
+          document.body.removeChild(textarea);
+          copyLabel.textContent = 'Copied';
+        }
+
         form.addEventListener('input', updateResult);
+        copyButton.addEventListener('click', copyResult);
         updateResult();
       }());
     </script>
