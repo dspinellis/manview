@@ -4,8 +4,9 @@
   "description": "Online troff page viewer",
   "main": "index.js",
   "scripts": {
+    "build": "grunt build",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "deploy": "grunt build && ./deploy.sh"
+    "deploy": "grunt build && bash deploy.sh"
   },
   "author": "Roberto Dip and Diomidis Spinellis",
   "license": "MIT",
