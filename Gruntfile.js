@@ -1,5 +1,9 @@
 'use strict';
 module.exports = function(grunt) {
+  var autoprefixer = require('autoprefixer');
+  var browserSync = require('browser-sync').create();
+  var chokidar = require('chokidar');
+  var postcss = require('postcss');
   var sass = require('sass');
 
   // Load all tasks
@@ -18,17 +22,6 @@ module.exports = function(grunt) {
 
   grunt.initConfig({
     distPath: 'assets/build',
-    jshint: {
-      options: {
-        jshintrc: '.jshintrc'
-      },
-      all: [
-        'Gruntfile.js',
-        'assets/js/*.js',
-        '!<%= distPath %>/js/scripts.js',
-        '!assets/**/*.min.*'
-      ]
-    },
     sass: {
       options: {
         implementation: sass,
@@ -94,19 +87,6 @@ module.exports = function(grunt) {
         parseFiles: true
       }
     },
-    grunticon: {
-      myIcons: {
-        files: [{
-          expand: true,
-          cwd: 'assets/img',
-          src: ['*.svg', '*.png'],
-          dest: '<%= distPath %>/css/icons'
-        }],
-        options: {
-          enhanceSVG: true
-        }
-      }
-    },
     browserSync: {
       dev: {
         options: {
@@ -116,36 +96,6 @@ module.exports = function(grunt) {
           },
           files: ['<%= distPath %>/css/main.css', '<%= distPath %>/js/scripts.js', 'index.html'],
           watchTask: true
-        }
-      }
-    },
-    watch: {
-      sass: {
-        files: [
-          'assets/scss/*.scss',
-          'assets/scss/**/*.scss'
-        ],
-        tasks: ['sass:dev', 'newer:autoprefixer:dev'],
-        options: {
-          spawn: false
-        }
-      },
-      js: {
-        files: [
-          jsFileList
-        ],
-        tasks: ['newer:concat'],
-        options: {
-          spawn: false
-        }
-      },
-      img: {
-        files: [
-          'assets/img/*.svg'
-        ],
-        tasks: ['grunticon'],
-        options: {
-          spawn: false
         }
       }
     },
@@ -159,6 +109,43 @@ module.exports = function(grunt) {
     }
   });
 
+  grunt.registerMultiTask('autoprefixer', function() {
+    var done = this.async();
+    var options = this.options({
+      browsers: []
+    });
+    var src = this.data.src;
+    var css = grunt.file.read(src);
+
+    postcss([autoprefixer({ overrideBrowserslist: options.browsers })])
+      .process(css, { from: src, to: src, map: false })
+      .then(function(result) {
+        grunt.file.write(src, result.css);
+        grunt.log.ok('1 autoprefixed stylesheet created.');
+        done();
+      })
+      .catch(done);
+  });
+
+  grunt.registerTask('browserSync', function() {
+    var done = this.async();
+    browserSync.init(grunt.config.get('browserSync.dev.options'), done);
+  });
+
+  grunt.registerTask('watch', function() {
+    this.async();
+
+    chokidar.watch(['assets/scss/*.scss', 'assets/scss/**/*.scss'])
+      .on('change', function() {
+        grunt.task.run(['sass:dev', 'newer:autoprefixer:dev']);
+      });
+
+    chokidar.watch(jsFileList)
+      .on('change', function() {
+        grunt.task.run(['newer:concat']);
+      });
+  });
+
   // Register tasks
   grunt.registerTask('default', [
     'browserSync',
@@ -166,8 +153,6 @@ module.exports = function(grunt) {
   ]);
 
   grunt.registerTask('dev', [
-    'grunticon',
-    'jshint',
     'sass',
     'autoprefixer:dev',
     'concat'

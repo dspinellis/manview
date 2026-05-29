@@ -23,9 +23,9 @@ Just clone the project and install the dependencies!
 ```bash
 $ git clone https://github.com/dspinellis/manview
 $ npm install
-$ bower install
-$ grunt build
-$ grunt
+$ npx bower install
+$ npx grunt build
+$ npx grunt
 ```
 ### Development
 
@@ -35,12 +35,18 @@ $ grunt
 * To test the current version
 
 ```bash
-grunt build
-cd dist
-python -m SimpleHTTPServer 3001
+npx grunt build
+npx grunt
 ```
 
-* Point your browser to a URL such as [http://localhost:3001/?src=https://raw.githubusercontent.com/dspinellis/git-issue/master/git-issue.1](http://localhost:3001/?src=https://raw.githubusercontent.com/dspinellis/git-issue/master/git-issue.1)
+or
+```
+cd dist
+python -m SimpleHTTPServer 3000
+```
+
+
+* Point your browser to a URL such as [http://localhost:3000/?src=https://raw.githubusercontent.com/dspinellis/git-issue/master/git-issue.1](http://localhost:3001/?src=https://raw.githubusercontent.com/dspinellis/git-issue/master/git-issue.1)
 
 ### Deployment
 
