@@ -94,7 +94,7 @@ module.exports = function(grunt) {
           server: {
             baseDir: './'
           },
-          files: ['<%= distPath %>/css/main.css', '<%= distPath %>/js/scripts.js', 'index.html'],
+          files: ['<%= distPath %>/css/main.css', '<%= distPath %>/js/scripts.js', 'index.html', 'setup.html'],
           watchTask: true
         }
       }
@@ -104,6 +104,7 @@ module.exports = function(grunt) {
         files: [
           { expand: true, src: ['<%= distPath %>/**'], dest: 'dist/', filter: 'isFile' },
           { src: ['index.html'], dest: 'dist/index.html' },
+          { src: ['setup.html'], dest: 'dist/setup.html' },
         ]
       }
     }

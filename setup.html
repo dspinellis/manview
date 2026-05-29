@@ -1,0 +1,166 @@
+<!doctype html>
+<html class="no-js" lang="">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Manview Setup | Dynamic Unix man page viewer</title>
+    <meta name="description" content="Create a Manview URL for a raw GitHub manual page">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="assets/build/css/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css">
+
+    <style>
+      .setup-page {
+        max-width: 820px;
+        margin: 0 auto;
+        padding: 30px 15px;
+      }
+
+      .setup-page h2 {
+        margin-bottom: 20px;
+      }
+
+      .setup-field {
+        margin-bottom: 18px;
+      }
+
+      .setup-field label {
+        display: block;
+        margin-bottom: 6px;
+        font-weight: 700;
+      }
+
+      .setup-field input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #E8E8E8;
+        font: inherit;
+      }
+
+      .setup-output {
+        margin-top: 28px;
+      }
+
+      .setup-output input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #E8E8E8;
+        font: inherit;
+      }
+
+      .setup-output input.is-warning {
+        border-color: #B00020;
+        color: #B00020;
+      }
+
+      .setup-warning {
+        display: none;
+        margin-top: 10px;
+        color: #B00020;
+      }
+
+      .setup-warning.is-visible {
+        display: block;
+      }
+
+      .setup-output a {
+        display: inline-block;
+        margin-top: 12px;
+        font-weight: 700;
+      }
+    </style>
+  </head>
+  <body>
+    <header role="banner">
+      <h1 class="banner-title"><a href="./">manview</a></h1>
+
+      <div class="icons-bar">
+        <a href="https://github.com/dspinellis/manview" target="_blank"><i class="icon-github"></i></a>
+      </div>
+    </header>
+
+    <main class="setup-page">
+      <h2>Create a Manview URL</h2>
+
+      <form id="setup-form">
+        <div class="setup-field">
+          <label for="src">Raw GitHub manual page URL</label>
+          <input id="src" name="src" type="url" placeholder="https://raw.githubusercontent.com/.../chmod.1" required>
+        </div>
+
+        <div class="setup-field">
+          <label for="name">Page title</label>
+          <input id="name" name="name" type="text" placeholder="Bell 32V: chmod(1)">
+        </div>
+
+        <div class="setup-field">
+          <label for="link">Page hyperlink</label>
+          <input id="link" name="link" type="url" placeholder="https://github.com/.../blob/.../chmod.1">
+        </div>
+      </form>
+
+      <div class="setup-output">
+        <label for="result">Manview URL</label>
+        <input id="result" type="url" readonly>
+        <p id="origin-warning" class="setup-warning">
+          This source URL is on a different domain from this page. The generated Manview URL may fail if the remote site blocks cross-origin requests.
+        </p>
+        <a id="result-link" href="./">Open generated page</a>
+      </div>
+    </main>
+
+    <script>
+      (function() {
+        var form = document.getElementById('setup-form');
+        var originWarning = document.getElementById('origin-warning');
+        var result = document.getElementById('result');
+        var resultLink = document.getElementById('result-link');
+        var fields = {
+          src: document.getElementById('src'),
+          name: document.getElementById('name'),
+          link: document.getElementById('link')
+        };
+
+        function manviewBaseUrl() {
+          return new URL('./', window.location.href);
+        }
+
+        function isCrossOrigin(url) {
+          try {
+            return new URL(url).origin !== window.location.origin;
+          } catch(e) {
+            return false;
+          }
+        }
+
+        function updateResult() {
+          var url = manviewBaseUrl();
+          var params = [];
+          var warning = fields.src.value && isCrossOrigin(fields.src.value);
+
+          if(fields.src.value) {
+            params.push('src=' + encodeURIComponent(fields.src.value));
+          }
+
+          if(fields.name.value) {
+            params.push('name=' + encodeURIComponent(fields.name.value));
+          }
+
+          if(fields.link.value) {
+            params.push('link=' + encodeURIComponent(fields.link.value));
+          }
+
+          url.search = params.join('&');
+          result.value = fields.src.value ? url.href : '';
+          resultLink.href = result.value || './';
+          result.classList.toggle('is-warning', warning);
+          originWarning.classList.toggle('is-visible', warning);
+        }
+
+        form.addEventListener('input', updateResult);
+        updateResult();
+      }());
+    </script>
+  </body>
+</html>
