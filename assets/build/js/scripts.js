@@ -3967,39 +3967,69 @@ ManView.Behaviors.PageView = Essential.Behavior.extend({
   refreshChannel: function(e) {
     var text = e.detail.text;
     var hasHeader = text.search(/^\.(TH|Dt)\b/m) != -1;
+    var html;
     console.log("Source text length: " + text.length);
     if (text.search(".Dd") != -1)
       this.parser.setMacroLib("doc");
-    this.el.innerHTML = this.parser.parseGroff(text) +
-      this.renderBottomBar(e.detail.lastModified);
-    this.adjustHeader(hasHeader);
+    html = this.parser.parseGroff(text);
+    this.renderManual(html, hasHeader);
+    this.setFooterDate(e.detail.lastModified);
     console.log("HTML length: " + this.el.innerHTML.length);
   },
 
-  renderBottomBar: function(lastModified) {
-    var date = '';
+  renderManual: function(html, hasHeader) {
+    var container = document.createElement('div');
+    var header;
 
-    if (lastModified) {
-      date = new Date(lastModified).toISOString().slice(0, 10);
-    }
-
-    return '<p class="manual-footer"><span><a href="https://github.com/dspinellis/manview">manview</a></span><span>' +
-      date + '</span></p>';
-  },
-
-  adjustHeader: function(hasHeader) {
-    var header = this.el.querySelector('p:first-of-type');
+    container.innerHTML = html;
+    header = container.querySelector('p:first-of-type');
 
     if (hasHeader && header) {
       if (this.sourceLink) {
 	this.linkHeaderSpans(header);
       }
-      return;
+      this.setTopBar(header);
+      header.parentNode.removeChild(header);
+    } else if (this.sourceName) {
+      this.setTopBar(this.createFallbackHeader());
     }
 
-    if (this.sourceName) {
-      this.insertFallbackHeader();
+    this.el.innerHTML = container.innerHTML;
+  },
+
+  setTopBar: function(header) {
+    var title = document.querySelector('[data-behavior="set-title"]');
+
+    if (title) {
+      title.innerHTML = header.innerHTML;
     }
+  },
+
+  setFooterDate: function(lastModified) {
+    var footerDate = document.querySelector('[data-role="manual-date"]');
+    var date = lastModified ? new Date(lastModified) : new Date();
+
+    if (isNaN(date.getTime())) {
+      date = new Date();
+    }
+
+    if (footerDate) {
+      footerDate.textContent = this.formatIsoDate(date);
+    }
+  },
+
+  formatIsoDate: function(date) {
+    var month = String(date.getMonth() + 1);
+    var day = String(date.getDate());
+
+    if (month.length < 2) {
+      month = '0' + month;
+    }
+    if (day.length < 2) {
+      day = '0' + day;
+    }
+
+    return date.getFullYear() + '-' + month + '-' + day;
   },
 
   linkHeaderSpans: function(header) {
@@ -4021,7 +4051,7 @@ ManView.Behaviors.PageView = Essential.Behavior.extend({
     element.appendChild(link);
   },
 
-  insertFallbackHeader: function() {
+  createFallbackHeader: function() {
     var header = document.createElement('p');
     var span = document.createElement('span');
 
@@ -4034,7 +4064,7 @@ ManView.Behaviors.PageView = Essential.Behavior.extend({
     }
 
     header.appendChild(span);
-    this.el.insertBefore(header, this.el.firstChild);
+    return header;
   },
 
   createSourceLink: function(text) {

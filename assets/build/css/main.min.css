@@ -442,13 +442,32 @@ figure {
   height: 50px;
   padding: 0 15px;
 }
+[role=banner] .banner-title:after {
+  content: ".";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
 [role=banner] .banner-title {
-  display: inline-block;
+  display: block;
   line-height: 50px;
   -webkit-background-size: cover;
           background-size: cover;
   font-size: 16px;
+  font-weight: 400;
   color: #A0AABF;
+  text-align: center;
+}
+[role=banner] .banner-title span:first-child {
+  float: left;
+}
+[role=banner] .banner-title span:last-child {
+  float: right;
+}
+[role=banner] .banner-title a {
+  color: inherit;
+  text-decoration: none;
 }
 [role=banner] .icons-bar {
   float: right;
@@ -462,6 +481,31 @@ figure {
   -webkit-background-size: cover;
           background-size: cover;
   vertical-align: middle;
+}
+
+.manual-footer:after {
+  content: ".";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
+.manual-footer {
+  height: 50px;
+  padding: 0 15px;
+  line-height: 50px;
+  background-color: #373D49;
+  color: #A0AABF;
+}
+.manual-footer span:first-child {
+  float: left;
+}
+.manual-footer span:last-child {
+  float: right;
+}
+.manual-footer a {
+  color: inherit;
+  text-decoration: none;
 }
 
 .live-preview-l:after {
@@ -478,7 +522,7 @@ figure {
   overflow: auto;
 }
 .live-preview-l .code-box #editor, .live-preview-l .code-box #result {
-  height: calc(100vh - 150px);
+  height: calc(100vh - 100px);
   width: 100%;
 }
 @media (max-width: 767px) {
@@ -552,24 +596,6 @@ figure {
 }
 .groff-output h2 {
   margin: 15px 0;
-}
-.groff-output .manual-footer:after {
-  content: ".";
-  display: block;
-  height: 0;
-  clear: both;
-  visibility: hidden;
-}
-.groff-output .manual-footer {
-  margin-top: 30px;
-  padding-top: 10px;
-  border-top: 1px solid #E8E8E8;
-}
-.groff-output .manual-footer span:first-child {
-  float: left;
-}
-.groff-output .manual-footer span:last-child {
-  float: right;
 }
 
 .switch:after {
