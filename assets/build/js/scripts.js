@@ -3948,17 +3948,49 @@ ManView.Behaviors.PageView = Essential.Behavior.extend({
     request.open('GET', url);
     request.responseType = 'text';
     request.onload = function() {
-      var customEvent = new CustomEvent("source:retrieved", {
-	"detail": {
-	  text: request.response,
-	  lastModified: request.getResponseHeader('Last-Modified'),
-	  etag: request.getResponseHeader('ETag')
-	}
-      });
-      document.dispatchEvent(customEvent);
-      console.log("Received " + request.response.length + " bytes");
-    };
+      var etag = request.getResponseHeader('ETag');
+      var dispatchSource = function(fingerprint) {
+        var customEvent = new CustomEvent("source:retrieved", {
+	  "detail": {
+	    text: request.response,
+	    lastModified: request.getResponseHeader('Last-Modified'),
+	    etag: etag || fingerprint
+	  }
+        });
+
+        document.dispatchEvent(customEvent);
+        console.log("Received " + request.response.length + " bytes");
+      };
+
+      if (etag) {
+        dispatchSource(etag);
+	return;
+      }
+
+      this.computeTextSha256(request.response)
+	.then(dispatchSource)
+	.catch(function() {
+	  dispatchSource('');
+	});
+    }.bind(this);
     request.send();
+  },
+
+  computeTextSha256: function(text) {
+    var bytes;
+
+    if (!window.crypto || !window.crypto.subtle || !window.TextEncoder) {
+      return Promise.reject();
+    }
+
+    bytes = new TextEncoder().encode(text);
+
+    return window.crypto.subtle.digest('SHA-256', bytes)
+      .then(function(hash) {
+	return Array.prototype.map.call(new Uint8Array(hash), function(byte) {
+	  return ('00' + byte.toString(16)).slice(-2);
+	}).join('');
+      });
   },
 
   channels: {
