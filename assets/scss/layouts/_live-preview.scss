@@ -8,6 +8,9 @@
 .live-preview-l {
   @include clearfix();
 
+  padding-top: $banner-height;
+  padding-bottom: $banner-height;
+
   .code-box {
     margin: 0;
     width: 100%;
@@ -16,7 +19,7 @@
     overflow: auto;
 
     #editor, #result {
-      height: calc(100vh - #{$banner-height * 3});
+      height: calc(100vh - #{$banner-height * 2});
       width: 100%;
     }
   }

@@ -21,6 +21,11 @@
     span:last-child {
       float: right;
     }
+
+    &.manual-header span {
+      display: block;
+      float: none;
+    }
   }
 
   h2 {

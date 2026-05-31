@@ -8,17 +8,39 @@
 [role="banner"] {
   @include clearfix();
 
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
   background-color: $main-bg-color;
   height: $banner-height;
   padding: 0 15px;
 
   .banner-title {
-    display: inline-block;
+    @include clearfix();
+
+    display: block;
     line-height: $banner-height;
 
     background-size: cover;
     font-size: 16px;
+    font-weight: 400;
     color: $secondary-text-color;
+    text-align: center;
+
+    > span:first-child {
+      float: left;
+    }
+
+    > span:last-child {
+      float: right;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
   }
 
   .icons-bar {
@@ -34,5 +56,33 @@
       background-size: cover;
       vertical-align: middle;
     }
+  }
+}
+
+.manual-footer {
+  @include clearfix();
+
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  height: $banner-height;
+  padding: 0 15px;
+  line-height: $banner-height;
+  background-color: $main-bg-color;
+  color: $secondary-text-color;
+
+  > span:first-child {
+    float: left;
+  }
+
+  > span:last-child {
+    float: right;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
   }
 }

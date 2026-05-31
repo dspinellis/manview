@@ -91,6 +91,12 @@ if [[ -z `ls -A "$deploy_directory" 2> /dev/null` && -z $allow_empty ]]; then
   exit 1
 fi
 
+deploy_sha=`git rev-parse --short main 2> /dev/null || git rev-parse --short master 2> /dev/null || git rev-parse --short HEAD`
+if [ -f "$deploy_directory/index.html" ]; then
+  sed -i "s/(DEV)/($deploy_sha)/g" "$deploy_directory/index.html"
+  sed -i "s/v=DEV/v=$deploy_sha/g" "$deploy_directory/index.html"
+fi
+
 disable_expanded_output
 git fetch --force $repo $deploy_branch:$deploy_branch
 enable_expanded_output
