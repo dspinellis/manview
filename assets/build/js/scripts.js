@@ -3951,7 +3951,8 @@ ManView.Behaviors.PageView = Essential.Behavior.extend({
       var customEvent = new CustomEvent("source:retrieved", {
 	"detail": {
 	  text: request.response,
-	  lastModified: request.getResponseHeader('Last-Modified')
+	  lastModified: request.getResponseHeader('Last-Modified'),
+	  etag: request.getResponseHeader('ETag')
 	}
       });
       document.dispatchEvent(customEvent);
@@ -3973,7 +3974,7 @@ ManView.Behaviors.PageView = Essential.Behavior.extend({
       this.parser.setMacroLib("doc");
     html = this.parser.parseGroff(text);
     this.renderManual(html, hasHeader);
-    this.setFooterDate(e.detail.lastModified);
+    this.setFooter(e.detail.lastModified, e.detail.etag);
     console.log("HTML length: " + this.el.innerHTML.length);
   },
 
@@ -4005,8 +4006,9 @@ ManView.Behaviors.PageView = Essential.Behavior.extend({
     }
   },
 
-  setFooterDate: function(lastModified) {
+  setFooter: function(lastModified, etag) {
     var footerDate = document.querySelector('[data-role="manual-date"]');
+    var footerEtag = document.querySelector('[data-role="manual-etag"]');
     var date = lastModified ? new Date(lastModified) : new Date();
 
     if (isNaN(date.getTime())) {
@@ -4016,6 +4018,13 @@ ManView.Behaviors.PageView = Essential.Behavior.extend({
     if (footerDate) {
       footerDate.textContent = this.formatIsoDate(date);
     }
+    if (footerEtag) {
+      footerEtag.textContent = etag ? '(' + this.cleanEtag(etag).slice(0, 6) + ')' : '';
+    }
+  },
+
+  cleanEtag: function(etag) {
+    return etag.replace(/^W\//, '').replace(/"/g, '');
   },
 
   formatIsoDate: function(date) {

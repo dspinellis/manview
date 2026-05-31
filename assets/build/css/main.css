@@ -432,6 +432,11 @@ figure {
   visibility: hidden;
 }
 [role=banner] {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
   background-color: #373D49;
   height: 50px;
   padding: 0 15px;
@@ -452,10 +457,10 @@ figure {
   color: #A0AABF;
   text-align: center;
 }
-[role=banner] .banner-title span:first-child {
+[role=banner] .banner-title > span:first-child {
   float: left;
 }
-[role=banner] .banner-title span:last-child {
+[role=banner] .banner-title > span:last-child {
   float: right;
 }
 [role=banner] .banner-title a {
@@ -483,16 +488,21 @@ figure {
   visibility: hidden;
 }
 .manual-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
   height: 50px;
   padding: 0 15px;
   line-height: 50px;
   background-color: #373D49;
   color: #A0AABF;
 }
-.manual-footer span:first-child {
+.manual-footer > span:first-child {
   float: left;
 }
-.manual-footer span:last-child {
+.manual-footer > span:last-child {
   float: right;
 }
 .manual-footer a {
@@ -506,6 +516,10 @@ figure {
   height: 0;
   clear: both;
   visibility: hidden;
+}
+.live-preview-l {
+  padding-top: 50px;
+  padding-bottom: 50px;
 }
 .live-preview-l .code-box {
   margin: 0;
