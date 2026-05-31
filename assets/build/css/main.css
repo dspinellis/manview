@@ -502,6 +502,12 @@ figure {
 .manual-footer > span:first-child {
   float: left;
 }
+.manual-footer > span:nth-child(2) {
+  display: block;
+  margin: 0 auto;
+  width: 16em;
+  text-align: center;
+}
 .manual-footer > span:last-child {
   float: right;
 }

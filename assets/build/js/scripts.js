@@ -4019,7 +4019,7 @@ ManView.Behaviors.PageView = Essential.Behavior.extend({
       footerDate.textContent = this.formatIsoDate(date);
     }
     if (footerEtag) {
-      footerEtag.textContent = etag ? '(' + this.cleanEtag(etag).slice(0, 6) + ')' : '';
+      footerEtag.textContent = etag ? 'etag: ' + this.cleanEtag(etag).slice(0, 6) : '';
     }
   },
 
