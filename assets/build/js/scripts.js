@@ -3944,6 +3944,7 @@ ManView.Behaviors.PageView = Essential.Behavior.extend({
     this.sourceLink = query.link || '';
     this.parser = ManView.Services.TextParser.new();
     var request = new XMLHttpRequest();
+    url = this.cacheBustedUrl(url);
     console.log('Fetching ' + url);
     request.open('GET', url);
     request.responseType = 'text';
@@ -3972,6 +3973,12 @@ ManView.Behaviors.PageView = Essential.Behavior.extend({
       dispatchSource(etag);
     };
     request.send();
+  },
+
+  cacheBustedUrl: function(url) {
+    var separator = url.indexOf('?') === -1 ? '?' : '&';
+
+    return url + separator + 'manview-cache=' + Date.now();
   },
 
   channels: {
