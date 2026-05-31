@@ -97,6 +97,4 @@ commit and push all your changes on the master branch, and then run
 
 ```sh
 npm run deploy
-git push origin gh-pages
 ```
-
