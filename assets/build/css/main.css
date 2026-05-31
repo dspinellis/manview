@@ -538,8 +538,30 @@ figure {
 .groff-output > p:first-of-type span:last-child {
   float: right;
 }
+.groff-output > p:first-of-type.manual-header span {
+  display: block;
+  float: none;
+}
 .groff-output h2 {
   margin: 15px 0;
+}
+.groff-output .manual-footer:after {
+  content: ".";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
+.groff-output .manual-footer {
+  margin-top: 30px;
+  padding-top: 10px;
+  border-top: 1px solid #E8E8E8;
+}
+.groff-output .manual-footer span:first-child {
+  float: left;
+}
+.groff-output .manual-footer span:last-child {
+  float: right;
 }
 
 .switch:after {

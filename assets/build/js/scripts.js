@@ -3932,13 +3932,16 @@ ManView.Behaviors.PageView = Essential.Behavior.extend({
   init: function() {
     var url = 'https://raw.githubusercontent.com/dspinellis/manview/master/manview.3';
     var parsedURI = URI.parse(window.location.href);
+    var query = {};
     console.log('parsedURI ' + parsedURI);
     if (parsedURI.query) {
-      var query = URI.parseQuery(parsedURI.query);
+      query = URI.parseQuery(parsedURI.query);
       console.log('Query: ' + query);
       if (query.src)
 	url = query.src;
     }
+    this.sourceName = query.name || '';
+    this.sourceLink = query.link || '';
     this.parser = ManView.Services.TextParser.new();
     var request = new XMLHttpRequest();
     console.log('Fetching ' + url);
@@ -3947,7 +3950,8 @@ ManView.Behaviors.PageView = Essential.Behavior.extend({
     request.onload = function() {
       var customEvent = new CustomEvent("source:retrieved", {
 	"detail": {
-	  text: request.response
+	  text: request.response,
+	  lastModified: request.getResponseHeader('Last-Modified')
 	}
       });
       document.dispatchEvent(customEvent);
@@ -3962,11 +3966,84 @@ ManView.Behaviors.PageView = Essential.Behavior.extend({
 
   refreshChannel: function(e) {
     var text = e.detail.text;
+    var hasHeader = text.search(/^\.(TH|Dt)\b/m) != -1;
     console.log("Source text length: " + text.length);
     if (text.search(".Dd") != -1)
       this.parser.setMacroLib("doc");
-    this.el.innerHTML = this.parser.parseGroff(text);
+    this.el.innerHTML = this.parser.parseGroff(text) +
+      this.renderBottomBar(e.detail.lastModified);
+    this.adjustHeader(hasHeader);
     console.log("HTML length: " + this.el.innerHTML.length);
+  },
+
+  renderBottomBar: function(lastModified) {
+    var date = '';
+
+    if (lastModified) {
+      date = new Date(lastModified).toISOString().slice(0, 10);
+    }
+
+    return '<p class="manual-footer"><span><a href="https://github.com/dspinellis/manview">manview</a></span><span>' +
+      date + '</span></p>';
+  },
+
+  adjustHeader: function(hasHeader) {
+    var header = this.el.querySelector('p:first-of-type');
+
+    if (hasHeader && header) {
+      if (this.sourceLink) {
+	this.linkHeaderSpans(header);
+      }
+      return;
+    }
+
+    if (this.sourceName) {
+      this.insertFallbackHeader();
+    }
+  },
+
+  linkHeaderSpans: function(header) {
+    var spans = header.querySelectorAll('span');
+    var i;
+
+    for (i = 0; i < spans.length; i++) {
+      this.wrapContentsWithLink(spans[i]);
+    }
+  },
+
+  wrapContentsWithLink: function(element) {
+    var link = document.createElement('a');
+
+    link.href = this.sourceLink;
+    while (element.firstChild) {
+      link.appendChild(element.firstChild);
+    }
+    element.appendChild(link);
+  },
+
+  insertFallbackHeader: function() {
+    var header = document.createElement('p');
+    var span = document.createElement('span');
+
+    header.className = 'manual-header';
+
+    if (this.sourceLink) {
+      span.appendChild(this.createSourceLink(this.sourceName));
+    } else {
+      span.textContent = this.sourceName;
+    }
+
+    header.appendChild(span);
+    this.el.insertBefore(header, this.el.firstChild);
+  },
+
+  createSourceLink: function(text) {
+    var link = document.createElement('a');
+
+    link.href = this.sourceLink;
+    link.textContent = text;
+
+    return link;
   },
 
 });
@@ -3978,18 +4055,7 @@ ManView.Behaviors.SetTitle = Essential.Behavior.extend({
   priority: 1,
 
   init: function() {
-    var title = "<a href='https://github.com/dspinellis/manview'>manview</a>";
-    var parsedURI = URI.parse(window.location.href);
-    if (parsedURI.query) {
-      var query = URI.parseQuery(parsedURI.query);
-      if (query.name && query.link)
-	title += " — " + "<a href='" + query.link + "'>" + query.name + "</a>";
-      else if (query.name)
-	title += " — " + query.name;
-      else if (query.link)
-	title += " — " + "<a href='" + query.link + "'>Manual Page</a>";
-      this.el.innerHTML = title;
-    }
+    this.el.innerHTML = "<a href='https://github.com/dspinellis/manview'>manview</a>";
   },
 
 });
