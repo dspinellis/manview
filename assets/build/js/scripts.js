@@ -3944,41 +3944,20 @@ ManView.Behaviors.PageView = Essential.Behavior.extend({
     this.sourceLink = query.link || '';
     this.parser = ManView.Services.TextParser.new();
     var request = new XMLHttpRequest();
-    url = this.cacheBustedUrl(url);
     console.log('Fetching ' + url);
     request.open('GET', url);
     request.responseType = 'text';
     request.onload = function() {
-      var etag = request.getResponseHeader('ETag');
-      console.log('Source status:', request.status, request.statusText);
-      console.log('Source final URL:', request.responseURL);
-      console.log('Source Last-Modified header:', request.getResponseHeader('Last-Modified'));
-      console.log('Source ETag header:', etag);
-      console.log('Source all response headers:\n' + request.getAllResponseHeaders());
-
-      var dispatchSource = function(fingerprint) {
-        var customEvent = new CustomEvent("source:retrieved", {
-	  "detail": {
-	    text: request.response,
-	    lastModified: request.getResponseHeader('Last-Modified'),
-	    etag: fingerprint
-	  }
-        });
-
-        console.log('Dispatched source detail:', customEvent.detail);
-        document.dispatchEvent(customEvent);
-        console.log("Received " + request.response.length + " bytes");
-      };
-
-      dispatchSource(etag);
+      var customEvent = new CustomEvent("source:retrieved", {
+	"detail": {
+	  text: request.response,
+	  lastModified: request.getResponseHeader('Last-Modified')
+	}
+      });
+      document.dispatchEvent(customEvent);
+      console.log("Received " + request.response.length + " bytes");
     };
     request.send();
-  },
-
-  cacheBustedUrl: function(url) {
-    var separator = url.indexOf('?') === -1 ? '?' : '&';
-
-    return url + separator + 'manview-cache=' + Date.now();
   },
 
   channels: {
@@ -3994,7 +3973,7 @@ ManView.Behaviors.PageView = Essential.Behavior.extend({
       this.parser.setMacroLib("doc");
     html = this.parser.parseGroff(text);
     this.renderManual(html, hasHeader);
-    this.setFooter(e.detail.lastModified, e.detail.etag);
+    this.setFooter(e.detail.lastModified);
     console.log("HTML length: " + this.el.innerHTML.length);
   },
 
@@ -4026,9 +4005,8 @@ ManView.Behaviors.PageView = Essential.Behavior.extend({
     }
   },
 
-  setFooter: function(lastModified, etag) {
+  setFooter: function(lastModified) {
     var footerDate = document.querySelector('[data-role="manual-date"]');
-    var footerEtag = document.querySelector('[data-role="manual-etag"]');
     var date = lastModified ? new Date(lastModified) : new Date();
 
     if (isNaN(date.getTime())) {
@@ -4038,13 +4016,6 @@ ManView.Behaviors.PageView = Essential.Behavior.extend({
     if (footerDate) {
       footerDate.textContent = this.formatIsoDate(date);
     }
-    if (footerEtag) {
-      footerEtag.textContent = etag ? 'etag: ' + this.cleanEtag(etag).slice(0, 6) : '';
-    }
-  },
-
-  cleanEtag: function(etag) {
-    return etag.replace(/^W\//, '').replace(/"/g, '');
   },
 
   formatIsoDate: function(date) {
